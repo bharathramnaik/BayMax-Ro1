@@ -1,0 +1,398 @@
+[
+  {
+    "id": "hypertension",
+    "name": "Hypertension",
+    "icd_code": "I10",
+    "category": "cardiovascular",
+    "description": "High blood pressure, a common condition that can lead to serious health problems like heart disease and stroke.",
+    "common_symptoms": [
+      "Often asymptomatic",
+      "Headaches",
+      "Shortness of breath",
+      "Nosebleeds",
+      "Dizziness",
+      "Chest pain",
+      "Visual changes"
+    ],
+    "vital_signs_patterns": {
+      "blood_pressure": {"systolic": ">=140", "diastolic": ">=90"},
+      "heart_rate": "variable"
+    },
+    "first_line_treatments": ["Lifestyle changes", "ACE inhibitors", "ARBs", "Thiazide diuretics"],
+    "second_line_treatments": ["Calcium channel blockers", "Beta-blockers", "Combination therapy"],
+    "urgency_level": "yellow",
+    "requires_hospital": false,
+    "prevalence": "very_common",
+    "age_groups": ["adults", "elderly"]
+  },
+  {
+    "id": "diabetes_type2",
+    "name": "Type 2 Diabetes",
+    "icd_code": "E11",
+    "category": "metabolic",
+    "description": "A chronic condition that affects the way the body processes blood sugar (glucose).",
+    "common_symptoms": [
+      "Increased thirst",
+      "Frequent urination",
+      "Increased hunger",
+      "Unexplained weight loss",
+      "Fatigue",
+      "Blurred vision",
+      "Slow-healing sores",
+      "Frequent infections"
+    ],
+    "vital_signs_patterns": {
+      "glucose_fasting": ">=126 mg/dL",
+      "glucose_random": ">=200 mg/dL",
+      "hba1c": ">=6.5%"
+    },
+    "first_line_treatments": ["Metformin", "Lifestyle changes", "Diet modification", "Exercise"],
+    "second_line_treatments": ["Sulfonylureas", "SGLT2 inhibitors", "GLP-1 agonists", "Insulin"],
+    "urgency_level": "yellow",
+    "requires_hospital": false,
+    "prevalence": "very_common",
+    "age_groups": ["adults", "elderly"]
+  },
+  {
+    "id": "respiratory_infection",
+    "name": "Acute Respiratory Infection",
+    "icd_code": "J06.9",
+    "category": "respiratory",
+    "description": "Infection of the respiratory tract, including common cold, bronchitis, and pneumonia.",
+    "common_symptoms": [
+      "Cough",
+      "Fever",
+      "Sore throat",
+      "Runny nose",
+      "Congestion",
+      "Body aches",
+      "Fatigue",
+      "Shortness of breath"
+    ],
+    "vital_signs_patterns": {
+      "temperature": ">37.5°C",
+      "respiratory_rate": ">20",
+      "spo2": "<95%"
+    },
+    "first_line_treatments": ["Rest", "Hydration", "Antipyretics", "Antibiotics (if bacterial)"],
+    "second_line_treatments": ["Antivirals", "Bronchodilators", "Hospitalization (severe cases)"],
+    "urgency_level": "yellow",
+    "requires_hospital": false,
+    "prevalence": "very_common",
+    "age_groups": ["all"]
+  },
+  {
+    "id": "anemia",
+    "name": "Anemia",
+    "icd_code": "D64.9",
+    "category": "hematological",
+    "description": "A condition in which you lack enough healthy red blood cells to carry adequate oxygen to your body's tissues.",
+    "common_symptoms": [
+      "Fatigue",
+      "Weakness",
+      "Pale or yellowish skin",
+      "Irregular heartbeats",
+      "Shortness of breath",
+      "Dizziness or lightheadedness",
+      "Chest pain",
+      "Cold hands and feet"
+    ],
+    "vital_signs_patterns": {
+      "heart_rate": ">100 (compensatory tachycardia)",
+      "blood_pressure": "low-normal"
+    },
+    "first_line_treatments": ["Iron supplementation", "Dietary changes", "Treat underlying cause"],
+    "second_line_treatments": ["Blood transfusion (severe)", "Erythropoiesis-stimulating agents", "B12/Folate supplementation"],
+    "urgency_level": "yellow",
+    "requires_hospital": false,
+    "prevalence": "common",
+    "age_groups": ["all"]
+  },
+  {
+    "id": "asthma",
+    "name": "Asthma",
+    "icd_code": "J45",
+    "category": "respiratory",
+    "description": "A condition in which your airways narrow and swell and may produce extra mucus.",
+    "common_symptoms": [
+      "Wheezing",
+      "Shortness of breath",
+      "Chest tightness",
+      "Coughing (especially at night or early morning)",
+      "Difficulty breathing during exercise"
+    ],
+    "vital_signs_patterns": {
+      "respiratory_rate": "elevated during attack",
+      "spo2": "<95% during attack"
+    },
+    "first_line_treatments": ["Inhaled corticosteroids", "Short-acting beta-agonists (rescue inhaler)"],
+    "second_line_treatments": ["Long-acting beta-agonists", "Leukotriene modifiers", "Biologics (severe cases)"],
+    "urgency_level": "yellow",
+    "requires_hospital": false,
+    "prevalence": "common",
+    "age_groups": ["children", "adults"]
+  },
+  {
+    "id": "urinary_tract_infection",
+    "name": "Urinary Tract Infection",
+    "icd_code": "N39.0",
+    "category": "urological",
+    "description": "An infection in any part of the urinary system (kidneys, ureters, bladder, urethra).",
+    "common_symptoms": [
+      "Strong urge to urinate",
+      "Burning sensation when urinating",
+      "Frequent urination",
+      "Cloudy urine",
+      "Strong-smelling urine",
+      "Pelvic pain",
+      "Blood in urine"
+    ],
+    "vital_signs_patterns": {
+      "temperature": "may be elevated"
+    },
+    "first_line_treatments": ["Antibiotics (short course)", "Increased water intake", "Pain relievers"],
+    "second_line_treatments": ["Longer antibiotic course", "Low-dose prophylactic antibiotics"],
+    "urgency_level": "yellow",
+    "requires_hospital": false,
+    "prevalence": "very_common",
+    "age_groups": ["adults", "elderly"]
+  },
+  {
+    "id": "hypothyroidism",
+    "name": "Hypothyroidism",
+    "icd_code": "E03.9",
+    "category": "endocrine",
+    "description": "A condition where the thyroid gland doesn't produce enough thyroid hormone.",
+    "common_symptoms": [
+      "Fatigue",
+      "Increased sensitivity to cold",
+      "Constipation",
+      "Dry skin",
+      "Weight gain",
+      "Puffy face",
+      "Hoarseness",
+      "Muscle weakness",
+      "Elevated cholesterol",
+      "Depression",
+      "Memory problems"
+    ],
+    "vital_signs_patterns": {
+      "heart_rate": "bradycardia",
+      "temperature": "low-normal"
+    },
+    "first_line_treatments": ["Levothyroxine (synthetic T4)"],
+    "second_line_treatments": ["Combination T4/T3 therapy", "Desiccated thyroid extract"],
+    "urgency_level": "green",
+    "requires_hospital": false,
+    "prevalence": "common",
+    "age_groups": ["adults", "elderly"]
+  },
+  {
+    "id": "depression",
+    "name": "Major Depressive Disorder",
+    "icd_code": "F32",
+    "category": "psychiatric",
+    "description": "A mood disorder that causes a persistent feeling of sadness and loss of interest.",
+    "common_symptoms": [
+      "Persistent sad or empty mood",
+      "Loss of interest in activities",
+      "Changes in appetite or weight",
+      "Sleep disturbances",
+      "Fatigue",
+      "Feelings of worthlessness",
+      "Difficulty concentrating",
+      "Thoughts of death or suicide"
+    ],
+    "vital_signs_patterns": {},
+    "first_line_treatments": ["SSRIs", "SNRIs", "Psychotherapy (CBT)"],
+    "second_line_treatments": ["TCAs", "MAOIs", "Combination therapy", "ECT (severe cases)"],
+    "urgency_level": "yellow",
+    "requires_hospital": false,
+    "prevalence": "common",
+    "age_groups": ["adults", "elderly"]
+  },
+  {
+    "id": "malaria",
+    "name": "Malaria",
+    "icd_code": "B54",
+    "category": "infectious",
+    "description": "A life-threatening disease caused by parasites that are transmitted to people through the bites of infected female Anopheles mosquitoes.",
+    "common_symptoms": [
+      "Fever",
+      "Chills",
+      "Sweats",
+      "Headache",
+      "Nausea and vomiting",
+      "Body aches",
+      "Fatigue",
+      "Jaundice (severe cases)"
+    ],
+    "vital_signs_patterns": {
+      "temperature": ">38°C (often high, cyclical)"
+    },
+    "first_line_treatments": ["Artemisinin-based combination therapy (ACT)", "Chloroquine (if sensitive)"],
+    "second_line_treatments": ["Quinine", "Mefloquine", "Hospitalization (severe cases)"],
+    "urgency_level": "red",
+    "requires_hospital": true,
+    "prevalence": "common_in_tropical_regions",
+    "age_groups": ["all"]
+  },
+  {
+    "id": "tuberculosis",
+    "name": "Tuberculosis",
+    "icd_code": "A15",
+    "category": "infectious",
+    "description": "A potentially serious bacterial infection that mainly affects your lungs.",
+    "common_symptoms": [
+      "Persistent cough (2+ weeks)",
+      "Coughing up blood",
+      "Chest pain",
+      "Night sweats",
+      "Fever",
+      "Weight loss",
+      "Fatigue",
+      "Loss of appetite"
+    ],
+    "vital_signs_patterns": {
+      "temperature": "low-grade fever"
+    },
+    "first_line_treatments": ["RIPE therapy: Rifampin, Isoniazid, Pyrazinamide, Ethambutol (6 months)"],
+    "second_line_treatments": ["For drug-resistant TB: fluoroquinolones, aminoglycosides"],
+    "urgency_level": "red",
+    "requires_hospital": true,
+    "prevalence": "common",
+    "age_groups": ["all"]
+  },
+  {
+    "id": "pneumonia",
+    "name": "Pneumonia",
+    "icd_code": "J18.9",
+    "category": "respiratory",
+    "description": "An infection that inflames the air sacs in one or both lungs, which may fill with fluid.",
+    "common_symptoms": [
+      "Cough with phlegm",
+      "Fever",
+      "Chills",
+      "Difficulty breathing",
+      "Chest pain when breathing or coughing",
+      "Fatigue",
+      "Nausea and vomiting"
+    ],
+    "vital_signs_patterns": {
+      "temperature": ">38°C",
+      "respiratory_rate": ">24",
+      "spo2": "<94%",
+      "heart_rate": ">100"
+    },
+    "first_line_treatments": ["Antibiotics (community-acquired)", "Rest", "Hydration", "Oxygen therapy if needed"],
+    "second_line_treatments": ["Hospitalization (severe cases)", "IV antibiotics", "Mechanical ventilation"],
+    "urgency_level": "red",
+    "requires_hospital": true,
+    "prevalence": "common",
+    "age_groups": ["all", "high_risk: elderly, children, immunocompromised"]
+  },
+  {
+    "id": "dehydration",
+    "name": "Dehydration",
+    "icd_code": "E86.0",
+    "category": "fluid_electrolyte",
+    "description": "A condition that occurs when the body loses more fluid than it takes in.",
+    "common_symptoms": [
+      "Extreme thirst",
+      "Dry mouth",
+      "Dark urine",
+      "Fatigue",
+      "Dizziness",
+      "Dry skin",
+      "Headache",
+      "Muscle cramps"
+    ],
+    "vital_signs_patterns": {
+      "heart_rate": "elevated",
+      "blood_pressure": "low",
+      "skin_turgor": "poor"
+    },
+    "first_line_treatments": ["Oral rehydration solution (ORS)", "Increased fluid intake", "Electrolyte replacement"],
+    "second_line_treatments": ["IV fluid replacement (severe cases)", "Hospitalization"],
+    "urgency_level": "yellow",
+    "requires_hospital": false,
+    "prevalence": "very_common",
+    "age_groups": ["all", "high_risk: elderly, children"]
+  },
+  {
+    "id": "migraine",
+    "name": "Migraine",
+    "icd_code": "G43",
+    "category": "neurological",
+    "description": "A neurological condition that can cause severe throbbing pain or a pulsing sensation, usually on one side of the head.",
+    "common_symptoms": [
+      "Severe headache (often unilateral)",
+      "Throbbing or pulsing pain",
+      "Nausea",
+      "Vomiting",
+      "Sensitivity to light and sound",
+      "Visual disturbances (aura)",
+      "Fatigue"
+    ],
+    "vital_signs_patterns": {},
+    "first_line_treatments": ["Rest in dark, quiet room", "Triptans", "NSAIDs", "Anti-nausea medications"],
+    "second_line_treatments": ["Preventive medications (beta-blockers, antidepressants)", "Botox (chronic migraine)"],
+    "urgency_level": "green",
+    "requires_hospital": false,
+    "prevalence": "common",
+    "age_groups": ["adults"]
+  },
+  {
+    "id": "gastroenteritis",
+    "name": "Gastroenteritis",
+    "icd_code": "A09",
+    "category": "gastrointestinal",
+    "description": "Inflammation of the stomach and intestines, typically resulting from a viral or bacterial infection.",
+    "common_symptoms": [
+      "Diarrhea",
+      "Nausea and vomiting",
+      "Abdominal cramps",
+      "Fever",
+      "Headache",
+      "Muscle aches",
+      "Dehydration"
+    ],
+    "vital_signs_patterns": {
+      "temperature": "may be elevated"
+    },
+    "first_line_treatments": ["Oral rehydration", "BRAT diet", "Rest", "Anti-diarrheal agents"],
+    "second_line_treatments": ["IV fluids (severe dehydration)", "Antibiotics (bacterial cause)"],
+    "urgency_level": "yellow",
+    "requires_hospital": false,
+    "prevalence": "very_common",
+    "age_groups": ["all"]
+  },
+  {
+    "id": "heart_failure",
+    "name": "Heart Failure",
+    "icd_code": "I50.9",
+    "category": "cardiovascular",
+    "description": "A chronic condition where the heart doesn't pump blood as well as it should.",
+    "common_symptoms": [
+      "Shortness of breath",
+      "Fatigue",
+      "Swelling in legs, ankles, feet",
+      "Rapid or irregular heartbeat",
+      "Reduced ability to exercise",
+      "Persistent cough",
+      "Swelling of abdomen",
+      "Weight gain from fluid retention"
+    ],
+    "vital_signs_patterns": {
+      "heart_rate": "elevated",
+      "blood_pressure": "may be elevated or low",
+      "spo2": "may be decreased"
+    },
+    "first_line_treatments": ["ACE inhibitors/ARBs", "Beta-blockers", "Diuretics", "Lifestyle changes"],
+    "second_line_treatments": ["Aldosterone antagonists", "Hydralazine/nitrates", "Cardiac resynchronization therapy"],
+    "urgency_level": "red",
+    "requires_hospital": true,
+    "prevalence": "common",
+    "age_groups": ["elderly"]
+  }
+]

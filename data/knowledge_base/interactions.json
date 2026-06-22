@@ -1,0 +1,107 @@
+[
+  {
+    "drug_a": "warfarin",
+    "drug_b": "ibuprofen",
+    "severity": "major",
+    "description": "NSAIDs increase risk of GI bleeding when combined with anticoagulants.",
+    "recommendation": "Avoid combination. Use paracetamol for pain relief instead."
+  },
+  {
+    "drug_a": "warfarin",
+    "drug_b": "amoxicillin",
+    "severity": "moderate",
+    "description": "Antibiotics may enhance anticoagulant effect.",
+    "recommendation": "Monitor INR closely during and after antibiotic course."
+  },
+  {
+    "drug_a": "lisinopril",
+    "drug_b": "ibuprofen",
+    "severity": "moderate",
+    "description": "NSAIDs reduce efficacy of ACE inhibitors and increase kidney risk.",
+    "recommendation": "Use paracetamol instead. If NSAID necessary, monitor kidney function."
+  },
+  {
+    "drug_a": "metformin",
+    "drug_b": "alcohol",
+    "severity": "major",
+    "description": "Alcohol increases risk of lactic acidosis with metformin.",
+    "recommendation": "Avoid alcohol or limit to occasional small amounts."
+  },
+  {
+    "drug_a": "atorvastatin",
+    "drug_b": "grapefruit",
+    "severity": "moderate",
+    "description": "Grapefruit increases statin levels, raising risk of side effects.",
+    "recommendation": "Avoid grapefruit juice or limit to small amounts."
+  },
+  {
+    "drug_a": "levothyroxine",
+    "drug_b": "calcium",
+    "severity": "moderate",
+    "description": "Calcium supplements reduce absorption of levothyroxine.",
+    "recommendation": "Take levothyroxine at least 4 hours apart from calcium."
+  },
+  {
+    "drug_a": "levothyroxine",
+    "drug_b": "iron",
+    "severity": "moderate",
+    "description": "Iron supplements reduce absorption of levothyroxine.",
+    "recommendation": "Take levothyroxine at least 4 hours apart from iron."
+  },
+  {
+    "drug_a": "ciprofloxacin",
+    "drug_b": "antacids",
+    "severity": "major",
+    "description": "Antacids significantly reduce absorption of ciprofloxacin.",
+    "recommendation": "Take ciprofloxacin 2 hours before or 6 hours after antacids."
+  },
+  {
+    "drug_a": "cetirizine",
+    "drug_b": "alcohol",
+    "severity": "moderate",
+    "description": "Alcohol enhances sedative effects of antihistamines.",
+    "recommendation": "Avoid alcohol while taking cetirizine."
+  },
+  {
+    "drug_a": "lisinopril",
+    "drug_b": "potassium",
+    "severity": "major",
+    "description": "ACE inhibitors increase potassium levels; supplements may cause hyperkalemia.",
+    "recommendation": "Monitor potassium levels. Avoid supplements unless prescribed."
+  },
+  {
+    "drug_a": "amlodipine",
+    "drug_b": "grapefruit",
+    "severity": "moderate",
+    "description": "Grapefruit may increase amlodipine levels.",
+    "recommendation": "Limit grapefruit intake."
+  },
+  {
+    "drug_a": "omeprazole",
+    "drug_b": "clopidogrel",
+    "severity": "major",
+    "description": "PPIs reduce activation of clopidogrel, reducing its efficacy.",
+    "recommendation": "Use pantoprazole instead if PPI needed with clopidogrel."
+  },
+  {
+    "drug_a": "ibuprofen",
+    "drug_b": "aspirin",
+    "severity": "moderate",
+    "description": "Ibuprofen may reduce cardioprotective effect of low-dose aspirin.",
+    "recommendation": "Take aspirin 30 minutes before ibuprofen if both needed."
+  },
+  {
+    "drug_a": "metformin",
+    "drug_b": "contrast_dye",
+    "severity": "major",
+    "description": "Contrast dye with metformin increases risk of lactic acidosis.",
+    "recommendation": "Stop metformin 48 hours before and after contrast procedures."
+  },
+  {
+    "drug_a": "artemether_lumefantrine",
+    "drug_b": "QT_prolonging_drugs",
+    "severity": "major",
+    "description": "Combined use may cause fatal cardiac arrhythmias.",
+    "recommendation": "Contraindicated. Use alternative antimalarial."
+  }
+]

@@ -3,6 +3,7 @@ BayMax-Ro1 Cloud API
 FastAPI backend for doctor dashboard and device management.
 """
 
+import os
 from typing import List, Optional
 from datetime import datetime
 from enum import Enum
@@ -10,6 +11,8 @@ from enum import Enum
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+
+from .supabase_client import get_client
 
 app = FastAPI(
     title="BayMax-Ro1 API",
@@ -93,7 +96,8 @@ async def root():
     return {
         "name": "BayMax-Ro1 API",
         "version": "1.0.0",
-        "status": "operational"
+        "status": "operational",
+        "database": "Supabase"
     }
 
 
@@ -102,7 +106,25 @@ async def submit_scan(scan: PatientScan):
     """Submit a new patient scan from device."""
     scan_id = f"scan_{scan.patient_id}_{scan.timestamp.timestamp()}"
     
-    scans_db[scan_id] = scan.dict()
+    try:
+        # Store in Supabase
+        client = get_client()
+        client.table("scans").insert({
+            "scan_id": scan_id,
+            "patient_id": scan.patient_id,
+            "device_id": scan.device_id,
+            "vitals": scan.vitals.dict(),
+            "diagnosis": scan.diagnosis.dict(),
+            "urgency": scan.urgency.value,
+            "confidence": scan.confidence,
+            "requires_doctor_review": scan.requires_doctor_review,
+            "raw_data": scan.raw_data,
+            "created_at": scan.timestamp.isoformat()
+        }).execute()
+        
+    except Exception as e:
+        # Fallback to in-memory if Supabase not configured
+        scans_db[scan_id] = scan.dict()
     
     # Check if doctor review required
     if scan.requires_doctor_review or scan.urgency == UrgencyLevel.RED:
@@ -119,6 +141,16 @@ async def submit_scan(scan: PatientScan):
 @app.get("/api/v1/scans/{scan_id}")
 async def get_scan(scan_id: str):
     """Get scan details."""
+    try:
+        client = get_client()
+        result = client.table("scans").select("*").eq("scan_id", scan_id).execute()
+        
+        if result.data:
+            return result.data[0]
+    except Exception:
+        pass
+    
+    # Fallback to in-memory
     if scan_id not in scans_db:
         raise HTTPException(status_code=404, detail="Scan not found")
     
@@ -130,6 +162,17 @@ async def get_pending_reviews():
     """Get scans requiring doctor review."""
     pending = []
     
+    try:
+        client = get_client()
+        result = client.table("scans").select("*").eq(
+            "requires_doctor_review", True
+        ).is_("reviewed", "null").execute()
+        
+        return {"scans": result.data, "count": len(result.data)}
+    except Exception:
+        pass
+    
+    # Fallback to in-memory
     for scan_id, scan in scans_db.items():
         if scan.get("requires_doctor_review"):
             if scan_id not in reviews_db:

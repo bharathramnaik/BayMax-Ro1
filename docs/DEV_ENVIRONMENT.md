@@ -36,7 +36,8 @@
 |-----------|--------|------|-------|
 | **CI/CD** | GitHub Actions | Free | 2000 min/month |
 | **Container** | Docker | Free | Local dev |
-| **Cloud** | Railway free tier | Free | API hosting |
+| **Cloud** | Render free tier | Free | API hosting |
+| **Database** | Supabase | Free | 500MB PostgreSQL |
 | **Storage** | Cloudflare R2 | Free | 10GB free |
 | **Monitoring** | Prometheus + Grafana | Free | Metrics |
 
@@ -358,7 +359,7 @@ Based on research, here's the **recommended hardware** for development:
 | Service | Free Tier | Purpose |
 |---------|-----------|---------|
 | **GitHub** | Unlimited repos, 2000 CI min | Code hosting, CI/CD |
-| **Railway** | $5 credit/month | API hosting |
+| **Render** | 750 hrs/month, 512MB RAM | API hosting |
 | **Supabase** | 500MB DB, 1GB storage | PostgreSQL, Auth |
 | **Cloudflare** | 10GB R2, unlimited CDN | Static assets |
 | **Vercel** | 100GB bandwidth | Web dashboard |

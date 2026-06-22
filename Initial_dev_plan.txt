@@ -1,0 +1,83 @@
+I want to get into a medical space as a philanthropist, my work is to design and develop a diagnose system for patients using multi-model agentic architecture/system which can help poor and people who won't be able to afford. Diagnose system has to see a human body, check blood and urine samples then diagnose the patient after that give a report with irregularities and regularities, functional depth, physical nature, how can he improve his health, pin-pointing the actual cause afterwards recommending the medications later which can approved or changed by actual medical practitioner.
+
+To see every part, movement, and flow of materials in the human body in real-time, medical professionals use a combination of advanced imaging technologies rather than a single ray.
+Here are the primary technologies used:
+Fluoroscopy: Uses continuous X-ray beams to project moving, real-time images on a monitor. It is commonly used to watch the digestive tract in action or guide catheters through blood vessels. [1, 2, 3, 4, 5]
+Magnetic Resonance Imaging (MRI): Uses powerful magnets and radio waves to generate highly detailed cross-sectional images. It is excellent for mapping soft tissues, organs, and monitoring blood flow without exposing the body to radiation. [1, 2, 3, 4]
+Positron Emission Tomography (PET): Tracks the flow of a safe, injected radioactive tracer to visualize cellular function, metabolism, and blood flow throughout the entire body. [1, 2, 3]
+Ultrasound (Sonography): Uses high-frequency sound waves to capture real-time moving images of organs, muscles, and blood flow (using Doppler technology) as they happen. [1, 2, 3, 4, 5]
+For official guidelines and detailed diagnostic applications, you can explore the National Institute of Biomedical Imaging and Bioengineering (NIBIB) or refer to radiology resources on RadiologyInfo.org.
+Could you tell me what specific bodily system or movement you are looking to observe? This will help me explain which of these technologies is the best fit for your needs.
+
+To see every part, movement, and flow of materials in the human body in real-time, medical professionals use a combination of advanced imaging technologies rather than a single ray.
+Here are the primary technologies used:
+Fluoroscopy: Uses continuous X-ray beams to project moving, real-time images on a monitor. It is commonly used to watch the digestive tract in action or guide catheters through blood vessels.
+Magnetic Resonance Imaging (MRI): Uses powerful magnets and radio waves to generate highly detailed cross-sectional images. It is excellent for mapping soft tissues, organs, and monitoring blood flow without exposing the body to radiation.
+Positron Emission Tomography (PET): Tracks the flow of a safe, injected radioactive tracer to visualize cellular function, metabolism, and blood flow throughout the entire body.
+Ultrasound (Sonography): Uses high-frequency sound waves to capture real-time moving images of organs, muscles, and blood flow (using Doppler technology) as they happen.
+For official guidelines and detailed diagnostic applications, you can explore the National Institute of Biomedical Imaging and Bioengineering (NIBIB) or refer to radiology resources on RadiologyInfo.org.
+Could you tell me what specific bodily system or movement you are looking to observe? This will help me explain which of these technologies is the best fit for your needs.
+This is for informational purposes only. For medical advice or diagnosis, consult a professional. AI responses may include mistakes. Learn more
+Different Types of X-Rays and Their Applications Explained
+Koshikaa
+What Are the Different Types of X-Ray Machines?
+PatientImage
+The employment of medical imaging tools to study anatomy
+ScienceDirect.com
+Show all
+20 sites
+To make sense of the complex moving images, tissues, and fluids captured by technologies like Fluoroscopy, MRI, PET, and Ultrasound, researchers have built powerful Artificial Intelligence (AI) and Machine Learning (ML) models.
+ResearchGate
+These models are trained on massive public and clinical datasets—such as Kaggle medical challenges, the UCI Machine Learning Repository, and hospital imaging archives—to help doctors read scans faster and track real-time bodily functions.
+ResearchGate +4
+
+1. Medical Multimodal Foundation Models
+Unlike old AI that could only look at one type of scan, Multimodal Foundation Models are trained to understand multiple streams of data at once. They can combine an active Ultrasound video, a 3D MRI scan, and a doctor's written notes into one clear diagnostic picture.
+ScienceDirect.com +2
+MedCLIP & ConCH: Trained on vast datasets of paired medical images and text. They align visual patterns (like a blocked blood vessel) with medical definitions.
+YouTube·MIA GROUP +1
+
+RAD-DINO: A model trained purely on massive amounts of biomedical imaging data using self-supervised learning. It teaches itself to spot anomalies without needing a human to label every single image.
+National Institutes of Health (.gov) +2
+
+Pillar-0: A specialized open-source model released by UC Berkeley and UCSF. It is uniquely trained to interpret entire 3D volumes from CT and MRI scans, allowing it to spot hundreds of conditions across the brain, chest, and abdomen.
+Imaging Technology News
+
+2. Deep Learning Models for Image Fusion
+When doctors need to overlay two different technologies—such as combining the structural detail of an MRI with the fluid movement of a PET scan—they use specific Deep Learning architectures:
+ResearchGate +1
+U-Net & ResNet: The industry-standard neural networks used for image segmentation. They are trained on pixel-by-pixel datasets to automatically outline moving organs, track tumor boundaries, and separate flowing liquids from stationary tissue.
+ScienceDirect.com +3
+
+3D Convolutional Neural Networks (3D CNNs): Trained on datasets containing stacked cross-sectional scans. They allow the AI to perceive depth and track the volume of blood or materials moving through a 3D space.
+IEEE Xplore +1
+
+BiLSTM (Bidirectional Long Short-Term Memory): This network is trained on sequence data (like real-time video clips). It is heavily used in Ultrasound AI frameworks to track the directional velocity of blood flow or heart valve movements over a timeline.
+IEEE Xplore
+
+3. Generative AI Models (GANs and Diffusion Models)
+Generative models are trained on datasets containing both low-quality and perfect, high-dose medical scans.
+iMerit
+Generative Adversarial Networks (GANs): Trained to "fill in the blanks". For example, they can take a fuzzy, real-time, low-field portable MRI or Ultrasound and enhance it into a crystal-clear image by predicting what the tissue actually looks like.
+Diffusion Models: Trained to reduce radiation exposure. They learn the exact statistical distribution of human anatomy so they can take a ultra-low-dose, grainy CT scan and safely denoise it into a highly detailed diagnostic map.
+iMerit +1
+
+
+Summary of Core Architectures
+Model Type
+Primary Training Data
+What it accomplishes
+Multimodal (e.g., MedCLIP)
+Scans paired with text reports
+Connects what the AI sees with medical logic
+U-Net / CNNs
+Hand-labeled organ & tissue scans
+Traces shapes and flows automatically
+Generative (GANs)
+Low-res vs High-res paired images
+Clears up grainy, real-time videos
+✅ Summary of Models
+Medical AI uses Multimodal Foundation Models (like Pillar-0 and MedCLIP) alongside U-Net architectures and Generative Networks to merge structural scans, track biological fluid flows, and enhance real-time bodily videos.
+
+
+Work with these models to reasearch and apply for the development of fundamental diagnostic system. 

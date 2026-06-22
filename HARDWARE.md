@@ -1,0 +1,439 @@
+# BayMax-Ro1 Hardware Design
+
+> Hardware architecture for the portable diagnostic device.
+
+---
+
+## 1. Device Form Factor
+
+### 1.1 Spectacle Design (BayMax Vision)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    BAYMAX-RO1 SPECTACLE                         │
+│                                                                 │
+│    ┌─────────────────────────────────────────────────────┐     │
+│    │                    FRAME                            │     │
+│    │  ┌─────────┐                         ┌─────────┐   │     │
+│    │  │ LEFT    │                         │ RIGHT   │   │     │
+│    │  │ LENS    │                         │ LENS    │   │     │
+│    │  │         │                         │         │   │     │
+│    │  │ ┌─────┐ │                         │ ┌─────┐ │   │     │
+│    │  │ │ IR  │ │                         │ │ NIR │ │   │     │
+│    │  │ │ CAM │ │                         │ │SPEC │ │   │     │
+│    │  │ └─────┘ │                         │ └─────┘ │   │     │
+│    │  └─────────┘                         └─────────┘   │     │
+│    │                                                     │     │
+│    │  ┌─────────────────────────────────────────────┐   │     │
+│    │  │              BRIDGE                         │   │     │
+│    │  │  ┌─────┐  ┌─────┐  ┌─────┐  ┌─────┐      │   │     │
+│    │  │  │THERM│  │ PPG │  │ MIC │  │ LED │      │   │     │
+│    │  │  └─────┘  └─────┘  └─────┘  └─────┘      │   │     │
+│    │  └─────────────────────────────────────────────┘   │     │
+│    │                                                     │     │
+│    │  ┌─────────────────────────────────────────────┐   │     │
+│    │  │              TEMPLE                         │   │     │
+│    │  │  ┌─────┐  ┌─────┐  ┌─────┐                │   │     │
+│    │  │  │ESP32│  │BATT │  │ MCU │                │   │     │
+│    │  │  └─────┘  └─────┘  └─────┘                │   │     │
+│    │  └─────────────────────────────────────────────┘   │     │
+│    └─────────────────────────────────────────────────────┘     │
+│                                                                 │
+│    ┌─────────────────────────────────────────────────────┐     │
+│    │              CONTROL UNIT (Behind Ear)              │     │
+│    │  ┌─────────────────────────────────────────────┐   │     │
+│    │  │  Raspberry Pi Zero 2W (or Pi 5 via cable)   │   │     │
+│    │  │  ┌─────┐  ┌─────┐  ┌─────┐  ┌─────┐      │   │     │
+│    │  │  │ CPU │  │ RAM │  │ WiFi│  │ BLE │      │   │     │
+│    │  │  └─────┘  └─────┘  └─────┘  └─────┘      │   │     │
+│    │  └─────────────────────────────────────────────┘   │     │
+│    │                                                     │     │
+│    │  ┌─────────────────────────────────────────────┐   │     │
+│    │  │  Battery: 5000mAh Li-Po                     │   │     │
+│    │  │  Runtime: 8-10 hours                        │   │     │
+│    │  └─────────────────────────────────────────────┘   │     │
+│    └─────────────────────────────────────────────────────┘     │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 2. Sensor Specifications
+
+### 2.1 Sensor Array
+
+| Sensor | Model | Interface | Power | Purpose |
+|--------|-------|-----------|-------|---------|
+| **PPG** | MAX30102 | I2C | 1.2mA | Heart rate, SpO2, BP est |
+| **NIR** | Custom (940/1050nm) | ADC | 50mA | Blood glucose (research) |
+| **Thermal** | MLX90614 | I2C | 1mA | Body temp, inflammation |
+| **IR Camera** | OV2640 | SPI | 40mA | Facial analysis, skin |
+| **Microphone** | INMP441 | I2S | 0.6mA | Cough, voice analysis |
+| **IMU** | MPU6050 | I2C | 3.4mA | Movement, posture |
+
+### 2.2 Sensor Placement
+
+```
+SPECTACLE FRONT VIEW
+═════════════════════
+
+     [IR Camera]              [NIR LEDs]
+          ↓                       ↓
+    ┌─────────┐             ┌─────────┐
+    │  LEFT   │             │  RIGHT  │
+    │  LENS   │             │  LENS   │
+    │         │             │         │
+    │  ┌───┐  │             │  ┌───┐  │
+    │  │ ◉ │  │             │  │ ◉ │  │  ← IR LEDs
+    │  └───┘  │             │  └───┘  │
+    └────┬────┘             └────┬────┘
+         │                       │
+         └───────────┬───────────┘
+                     │
+              ┌──────┴──────┐
+              │   BRIDGE    │
+              │  ┌───────┐  │
+              │  │ [MLX] │  │  ← Thermal sensor (nose bridge)
+              │  │ [MAX] │  │  ← PPG sensor (nose pad)
+              │  │ [INMP]│  │  ← Microphone
+              │  └───────┘  │
+              └─────────────┘
+
+
+CONTROL UNIT (Behind Ear)
+═════════════════════════
+
+    ┌─────────────────────────┐
+    │  ┌───────────────────┐  │
+    │  │  Raspberry Pi     │  │
+    │  │  ┌─────┐ ┌─────┐  │  │
+    │  │  │ SoC │ │ RAM │  │  │
+    │  │  └─────┘ └─────┘  │  │
+    │  └───────────────────┘  │
+    │                          │
+    │  ┌───────────────────┐  │
+    │  │  ESP32-S3 MCU     │  │
+    │  │  ┌─────┐ ┌─────┐  │  │
+    │  │  │ CPU │ │ BLE │  │  │
+    │  │  └─────┘ └─────┘  │  │
+    │  └───────────────────┘  │
+    │                          │
+    │  ┌───────────────────┐  │
+    │  │  Battery 5000mAh  │  │
+    │  │  ┌─────────────┐  │  │
+    │  │  │ Li-Po Cell  │  │  │
+    │  │  └─────────────┘  │  │
+    │  └───────────────────┘  │
+    │                          │
+    │  ┌───────────────────┐  │
+    │  │  Display 2.4" TFT │  │
+    │  │  ┌─────────────┐  │  │
+    │  │  │  Results    │  │  │
+    │  │  └─────────────┘  │  │
+    │  └───────────────────┘  │
+    └─────────────────────────┘
+```
+
+---
+
+## 3. Circuit Design
+
+### 3.1 Main Schematic
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    POWER MANAGEMENT                             │
+│                                                                 │
+│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    │
+│  │ Battery │───►│  BQ25895│───►│  LDO    │───►│ 3.3V    │    │
+│  │ 5000mAh│    │  Charger │    │ 1.8V    │    │ Rail    │    │
+│  └─────────┘    └─────────┘    └─────────┘    └─────────┘    │
+│                       │                                        │
+│                       ▼                                        │
+│                  ┌─────────┐                                   │
+│                  │ USB-C   │                                   │
+│                  │ 5V/2A   │                                   │
+│                  └─────────┘                                   │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    SENSOR INTERFACES                            │
+│                                                                 │
+│  ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    │
+│  │  PPG    │───►│  I2C    │    │  NIR    │───►│  ADC    │    │
+│  │ MAX30102│    │  Bus    │    │ Custom  │    │ 12-bit  │    │
+│  └─────────┘    └────┬────┘    └─────────┘    └────┬────┘    │
+│                       │                             │          │
+│  ┌─────────┐    ┌────┴────┐    ┌─────────┐    ┌────┴────┐    │
+│  │ Thermal │───►│  ESP32  │    │  IMU    │───►│  GPIO   │    │
+│  │ MLX90614│    │   S3    │    │ MPU6050 │    │  Mux    │    │
+│  └─────────┘    └────┬────┘    └─────────┘    └─────────┘    │
+│                       │                                        │
+│  ┌─────────┐    ┌────┴────┐    ┌─────────┐                   │
+│  │  IR Cam │───►│  SPI    │    │  Mic    │───►│  I2S    │    │
+│  │  OV2640 │    │  Bus    │    │ INMP441 │    │  Bus    │    │
+│  └─────────┘    └─────────┘    └─────────┘    └─────────┘    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    PROCESSING UNIT                              │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │                    ESP32-S3                              │   │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐  │   │
+│  │  │  CPU    │  │  WiFi   │  │  BLE    │  │  USB    │  │   │
+│  │  │ 240MHz  │  │  802.11 │  │  5.0    │  │  OTG    │  │   │
+│  │  └─────────┘  └─────────┘  └─────────┘  └─────────┘  │   │
+│  │                                                          │   │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐                │   │
+│  │  │  SRAM   │  │  Flash  │  │  PSRAM  │                │   │
+│  │  │  512KB  │  │  8MB    │   │  8MB    │                │   │
+│  │  └─────────┘  └─────────┘  └─────────┘                │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                              │                                  │
+│                              ▼ USB 3.0                          │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │               Raspberry Pi Zero 2W                       │   │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐  │   │
+│  │  │  CPU    │  │  RAM    │  │  WiFi   │  │  BLE    │  │   │
+│  │  │ BCM2710A1│ │  512MB  │  │  802.11n│  │  4.2    │  │   │
+│  │  └─────────┘  └─────────┘  └─────────┘  └─────────┘  │   │
+│  │                                                          │   │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐                │   │
+│  │  │  GPU    │  │  microSD│  │  GPIO   │                │   │
+│  │  │ VideoCore│ │  128GB  │  │  40-pin │                │   │
+│  │  └─────────┘  └─────────┘  └─────────┘                │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 4. Bill of Materials (BOM)
+
+### 4.1 Component List
+
+| Category | Component | Model | Qty | Unit Cost | Total |
+|----------|-----------|-------|-----|-----------|-------|
+| **MCU** | ESP32-S3-DevKitC | ESP32-S3-WROOM-1 | 1 | $8.00 | $8.00 |
+| **SBC** | Raspberry Pi Zero 2W | RPi Zero 2W | 1 | $15.00 | $15.00 |
+| **Sensor** | PPG | MAX30102 | 2 | $2.00 | $4.00 |
+| **Sensor** | Thermal | MLX90614ESF | 1 | $10.00 | $10.00 |
+| **Sensor** | IR Camera | OV2640 | 1 | $5.00 | $5.00 |
+| **Sensor** | Microphone | INMP441 | 1 | $1.50 | $1.50 |
+| **Sensor** | IMU | MPU6050 | 1 | $1.00 | $1.00 |
+| **NIR** | LED 940nm | SFH 4253 | 2 | $1.50 | $3.00 |
+| **NIR** | LED 1050nm | SFH 4254 | 2 | $1.50 | $3.00 |
+| **Power** | Battery | 5000mAh Li-Po | 1 | $8.00 | $8.00 |
+| **Power** | Charger IC | BQ25895 | 1 | $3.00 | $3.00 |
+| **Display** | TFT LCD | 2.4" ILI9341 | 1 | $6.00 | $6.00 |
+| **Storage** | microSD | 128GB Class 10 | 1 | $12.00 | $12.00 |
+| **Passive** | Resistors, Caps | Various | 50 | $0.05 | $2.50 |
+| **Conn** | Connectors | FPC, Pin headers | 20 | $0.25 | $5.00 |
+| **PCB** | Main board | 4-layer, ENIG | 1 | $15.00 | $15.00 |
+| **Enclosure** | 3D printed | SLA resin | 1 | $20.00 | $20.00 |
+| | | | | **TOTAL** | **$122.00** |
+
+### 4.2 Cost at Scale (1000+ units)
+
+| Component | Unit Cost | Notes |
+|-----------|-----------|-------|
+| ESP32-S3 | $3.50 | Volume discount |
+| RPi Zero 2W | $10.00 | Volume discount |
+| Sensors | $12.00 | Bulk pricing |
+| Battery | $5.00 | Contract pricing |
+| PCB | $5.00 | Panel pricing |
+| Assembly | $10.00 | SMT service |
+| **Total** | **$45.50** | Target: $50 |
+
+---
+
+## 5. Firmware Architecture
+
+### 5.1 ESP32-S3 Firmware
+
+```c
+// Main firmware structure
+// firmware/src/main.c
+
+#include "sensor_fusion.h"
+#include "ble_comm.h"
+#include "power_mgmt.h"
+
+void app_main() {
+    // Initialize hardware
+    i2c_init();
+    spi_init();
+    adc_init();
+    
+    // Initialize sensors
+    ppg_init();
+    thermal_init();
+    camera_init();
+    mic_init();
+    imu_init();
+    
+    // Initialize communication
+    ble_init();
+    wifi_init();
+    
+    // Main loop
+    while (1) {
+        // Read sensors (parallel)
+        SensorData data = read_all_sensors();
+        
+        // Process on-device (lightweight)
+        VitalSigns vitals = process_vitals(data);
+        
+        // Send to RPi for AI processing
+        ble_send(vitals);
+        
+        // Wait for results
+        DiagnosisResult result = ble_receive();
+        
+        // Display results
+        display_show(result);
+        
+        // Power management
+        sleep_if_idle();
+    }
+}
+```
+
+### 5.2 Sensor Fusion Algorithm
+
+```python
+# edge/src/sensor_fusion.py
+
+class SensorFusion:
+    def __init__(self):
+        self.kalman_filters = {
+            'heart_rate': KalmanFilter(R=0.01, Q=0.001),
+            'spo2': KalmanFilter(R=0.02, Q=0.002),
+            'temperature': KalmanFilter(R=0.005, Q=0.0005)
+        }
+    
+    def fuse(self, raw_data: dict) -> VitalSigns:
+        # Apply noise filtering
+        filtered = self.apply_kalman(raw_data)
+        
+        # Extract features
+        features = self.extract_features(filtered)
+        
+        # Validate physiologically
+        validated = self.validate_physiology(features)
+        
+        return VitalSigns(
+            heart_rate=validated['hr'],
+            spo2=validated['spo2'],
+            temperature=validated['temp'],
+            blood_pressure=estimate_bp(validated),
+            confidence=validated['confidence']
+        )
+```
+
+---
+
+## 6. Assembly Guide
+
+### 6.1 Tools Required
+
+- Soldering iron (temperature controlled)
+- Hot air rework station
+- Multimeter
+- Oscilloscope (optional)
+- 3D printer (for enclosure)
+- Tweezers (ESD safe)
+
+### 6.2 Assembly Steps
+
+```
+Step 1: PCB Assembly
+├── Solder ESP32-S3 module
+├── Solder passive components
+├── Solder connectors
+└── Test power rails
+
+Step 2: Sensor Assembly
+├── Solder PPG sensors
+├── Solder thermal sensor
+├── Connect camera module
+└── Connect microphone
+
+Step 3: Integration
+├── Connect RPi to main board
+├── Connect battery
+├── Connect display
+└── Flash firmware
+
+Step 4: Enclosure
+├── 3D print enclosure
+├── Install components
+├── Route cables
+└── Final assembly
+
+Step 5: Testing
+├── Power-on test
+├── Sensor calibration
+├── Communication test
+└── Full system test
+```
+
+---
+
+## 7. Calibration Protocol
+
+### 7.1 Factory Calibration
+
+```python
+# scripts/calibrate.py
+
+class FactoryCalibration:
+    def calibrate_ppg(self, reference_device):
+        # Compare with medical-grade pulse oximeter
+        pass
+    
+    def calibrate_thermal(self, reference_thermometer):
+        # Compare with calibrated thermometer
+        pass
+    
+    def calibrate_camera(self, color_chart):
+        # Color calibration with standard chart
+        pass
+```
+
+### 7.2 Field Calibration
+
+- **Daily:** Self-test on power-on
+- **Weekly:** Quick calibration check
+- **Monthly:** Full calibration against reference
+
+---
+
+## 8. Reliability & Testing
+
+### 8.1 Environmental Testing
+
+| Test | Standard | Condition |
+|------|----------|-----------|
+| Temperature | IEC 60068-2-1 | -20°C to 50°C |
+| Humidity | IEC 60068-2-78 | 10% to 90% RH |
+| Vibration | IEC 60068-2-6 | 10-500 Hz |
+| Drop | IEC 60068-2-31 | 1.5m onto concrete |
+| Water | IP54 | Splash resistant |
+
+### 8.2 Medical Device Testing
+
+- **Biocompatibility:** ISO 10993 (skin contact)
+- **Electrical Safety:** IEC 60601-1
+- **EMC:** IEC 60601-1-2
+- **Software:** IEC 62304
+
+---
+
+*Hardware Version: 1.0*
+*Last Updated: June 2026*
+*Author: CTO, BayMax-Ro1*

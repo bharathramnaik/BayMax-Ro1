@@ -1,0 +1,120 @@
+# BayMax-Ro1 Configuration
+# Edge AI System Settings
+
+# System
+system:
+  name: "BayMax-Ro1"
+  version: "1.0.0"
+  log_level: "INFO"
+  scan_interval: 30  # seconds between scans
+
+# Sensor Configuration
+sensors:
+  ppg:
+    sampling_rate: 100  # Hz
+    samples: 500        # samples per reading
+    gain: 128
+    
+  thermal:
+    refresh_rate: 0.5   # Hz
+    emissivity: 0.98
+    
+  camera:
+    resolution: [640, 480]
+    fps: 15
+    
+  microphone:
+    sample_rate: 16000
+    channels: 1
+    duration: 5  # seconds
+
+# Medical LLM
+medical_llm:
+  model: "med42-v2-8b"
+  fallback_model: "llama3.2:latest"
+  temperature: 0.3
+  max_tokens: 500
+  
+# Agent Configuration
+agents:
+  confidence_threshold: 0.7
+  max_retries: 3
+  timeout: 30  # seconds
+  
+  vitals:
+    enabled: true
+    priority: 1
+    
+  facial:
+    enabled: true
+    priority: 2
+    
+  audio:
+    enabled: true
+    priority: 3
+    
+  diagnosis:
+    enabled: true
+    priority: 4
+    
+  treatment:
+    enabled: true
+    priority: 5
+    
+  report:
+    enabled: true
+    priority: 6
+
+# Communication
+communication:
+  ble:
+    enabled: true
+    device_name: "BayMax-Ro1"
+    
+  wifi:
+    enabled: false
+    ssid: ""
+    password: ""
+    
+  api:
+    enabled: false
+    endpoint: "http://localhost:8000"
+    
+# Display
+display:
+  enabled: true
+  brightness: 80  # percentage
+  timeout: 60     # seconds to stay on
+  
+# Power Management
+power:
+  low_battery_threshold: 20  # percentage
+  sleep_timeout: 300         # seconds
+  
+# Storage
+storage:
+  data_dir: "/data/baymax"
+  max_records: 10000
+  auto_cleanup: true
+
+# Safety
+safety:
+  require_doctor_review_threshold: 0.8
+  critical_alert_threshold: 0.9
+  audit_logging: true
+  
+# Knowledge Base
+knowledge_base:
+  conditions_db: "data/knowledge_base/conditions.json"
+  medications_db: "data/knowledge_base/medications.json"
+  interactions_db: "data/knowledge_base/interactions.json"
+  
+# Localization
+localization:
+  default_language: "en"
+  supported_languages:
+    - "en"
+    - "hi"
+    - "es"
+    - "fr"
+    - "ar"

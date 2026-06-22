@@ -172,3 +172,7 @@ models/**/*.gguf
 # Environment
 .env.local
 .env.production
+
+# Logs and temp files
+errors.txt
+*.log
